@@ -16,16 +16,14 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
 
     @Override
     public void createUsersTable() {
-        String sql;
         Session session = getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            sql = "CREATE TABLE IF NOT EXISTS user " +
+            session.createSQLQuery("CREATE TABLE IF NOT EXISTS user " +
                     "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
-                    "age TINYINT NOT NULL);";
-            session.createSQLQuery(sql).executeUpdate();
+                    "age TINYINT NOT NULL);").executeUpdate();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null) {
@@ -39,13 +37,11 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        String sql;
         Session session = getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            sql = "DROP TABLE IF EXISTS user;";
-            session.createSQLQuery(sql).executeUpdate();
+            session.createSQLQuery("DROP TABLE IF EXISTS user;").executeUpdate();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null) {
@@ -121,13 +117,11 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        String sql;
         Session session = getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            sql = "TRUNCATE TABLE USER;";
-            session.createSQLQuery(sql).executeUpdate();
+            session.createSQLQuery("TRUNCATE TABLE USER;").executeUpdate();
             transaction.commit();
         } catch (HibernateException ex) {
             if (transaction != null) {
